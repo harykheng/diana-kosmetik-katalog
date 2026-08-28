@@ -131,21 +131,38 @@ function renderProducts() {
   renderPagination(totalPages);
 }
 
+function getPageList(current, total) {
+  const pages = [];
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || Math.abs(i - current) <= 1) pages.push(i);
+  }
+  const withDots = [];
+  let prev = 0;
+  for (const i of pages) {
+    if (prev && i - prev > 1) withDots.push('...');
+    withDots.push(i);
+    prev = i;
+  }
+  return withDots;
+}
+
 function renderPagination(totalPages) {
   if (totalPages <= 1) {
     pagination.innerHTML = '';
     return;
   }
 
-  let buttons = `<button class="page-btn" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
-  for (let i = 1; i <= totalPages; i++) {
-    buttons += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
-  }
-  buttons += `<button class="page-btn" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
+  let buttons = `<button class="page-nav" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹ Back</button>`;
+  getPageList(currentPage, totalPages).forEach(item => {
+    buttons += item === '...'
+      ? `<span class="page-dots">...</span>`
+      : `<button class="page-btn ${item === currentPage ? 'active' : ''}" data-page="${item}">${item}</button>`;
+  });
+  buttons += `<button class="page-nav" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>Next ›</button>`;
 
   pagination.innerHTML = buttons;
 
-  pagination.querySelectorAll('.page-btn').forEach(btn => {
+  pagination.querySelectorAll('.page-btn, .page-nav').forEach(btn => {
     btn.addEventListener('click', () => {
       const page = parseInt(btn.dataset.page, 10);
       if (page === currentPage || page < 1 || page > totalPages) return;
