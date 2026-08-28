@@ -64,6 +64,68 @@ header.topbar p {
   border-color: var(--pink);
 }
 
+.bestseller-section {
+  padding: 4px 0 4px;
+}
+
+.bestseller-title {
+  margin: 0 16px 10px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.bestseller-list {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 0 16px 12px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.bestseller-list::-webkit-scrollbar { display: none; }
+
+.bestseller-card {
+  flex: 0 0 auto;
+  width: 150px;
+  scroll-snap-align: start;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bestseller-badge {
+  align-self: flex-start;
+  background: #fdeee7;
+  color: #d9682f;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.bestseller-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.bestseller-price {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--pink-dark);
+  margin-top: auto;
+}
+
 .category-tabs {
   display: flex;
   gap: 8px;
