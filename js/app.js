@@ -37,7 +37,7 @@ async function loadBestsellers() {
     .select('*')
     .gt('total_sold', 0)
     .order('total_sold', { ascending: false })
-    .limit(10);
+    .limit(20);
 
   if (error || !data?.length) {
     bestsellerSection.style.display = 'none';
