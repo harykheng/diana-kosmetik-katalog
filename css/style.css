@@ -147,29 +147,30 @@ header.topbar p {
 
 .product-prices {
   flex: 0 0 auto;
-  text-align: right;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+  row-gap: 3px;
+  align-items: baseline;
 }
 
 .price-row {
-  display: flex;
-  justify-content: flex-end;
-  align-items: baseline;
-  gap: 8px;
-  font-size: 0.85rem;
-  white-space: nowrap;
+  display: contents;
 }
 
 .price-label {
   color: var(--text-muted);
   font-size: 0.72rem;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .price-value {
   font-weight: 700;
   color: var(--pink-dark);
+  text-align: right;
+  white-space: nowrap;
+  font-size: 0.9rem;
 }
 
 .price-value-lusin {
@@ -202,14 +203,10 @@ footer {
     gap: 8px;
   }
   .product-prices {
+    grid-template-columns: 1fr auto;
     align-self: stretch;
-    flex-direction: row;
-    justify-content: space-between;
-    text-align: left;
   }
-  .price-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0;
+  .price-label {
+    text-align: left;
   }
 }
