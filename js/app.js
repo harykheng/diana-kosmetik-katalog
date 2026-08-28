@@ -28,6 +28,30 @@ const emptyState = document.getElementById('empty-state');
 const searchInput = document.getElementById('search-input');
 const categoryTabs = document.getElementById('category-tabs');
 const pagination = document.getElementById('pagination');
+const bestsellerSection = document.getElementById('bestseller-section');
+const bestsellerList = document.getElementById('bestseller-list');
+
+async function loadBestsellers() {
+  const { data, error } = await supabase
+    .from('public_catalog_bestsellers')
+    .select('*')
+    .gt('total_sold', 0)
+    .order('total_sold', { ascending: false })
+    .limit(10);
+
+  if (error || !data?.length) {
+    bestsellerSection.style.display = 'none';
+    return;
+  }
+
+  bestsellerList.innerHTML = data.map(p => `
+    <div class="bestseller-card">
+      <div class="bestseller-badge">🔥 ${p.total_sold} terjual</div>
+      <div class="bestseller-name">${escapeHtml(p.name)}</div>
+      <div class="bestseller-price">${p.price ? formatCurrency(p.price) : 'Tanyakan ke Sales'}</div>
+    </div>
+  `).join('');
+}
 
 async function loadCatalog() {
   grid.innerHTML = '<div class="loading">Memuat produk...</div>';
@@ -190,3 +214,4 @@ searchInput.addEventListener('input', () => {
 });
 
 loadCatalog();
+loadBestsellers();
