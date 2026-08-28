@@ -102,7 +102,6 @@ function renderProducts() {
 
   grid.innerHTML = list.map(p => `
     <div class="product-card">
-      <div class="product-thumb">🧴</div>
       <div class="product-body">
         ${p.category_name ? `<div class="product-category">${escapeHtml(p.category_name)}</div>` : ''}
         <div class="product-name">${escapeHtml(p.name)}</div>
