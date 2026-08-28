@@ -119,14 +119,10 @@ function renderProducts() {
         <div class="product-name">${escapeHtml(p.name)}</div>
         ${p.description ? `<div class="product-desc">${escapeHtml(p.description)}</div>` : ''}
         <div class="product-prices">
-          <div class="price-row">
-            <span class="price-label">Harga satuan</span>
-            <span class="price-value">${p.price ? formatCurrency(p.price) : 'Tanyakan ke Sales'}</span>
-          </div>
-          <div class="price-row">
-            <span class="price-label">Harga lusin (12 pcs)</span>
-            <span class="price-value price-value-lusin">${p.price ? formatCurrency(hargaLusin(p.price)) : 'Tanyakan ke Sales'}</span>
-          </div>
+          <span class="price-label">Harga satuan</span>
+          <span class="price-value">${p.price ? formatCurrency(p.price) : 'Tanyakan ke Sales'}</span>
+          <span class="price-label">Harga lusin (12 pcs)</span>
+          <span class="price-value price-value-lusin">${p.price ? formatCurrency(hargaLusin(p.price)) : 'Tanyakan ke Sales'}</span>
         </div>
       </div>
     </div>
