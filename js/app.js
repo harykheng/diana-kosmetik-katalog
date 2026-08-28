@@ -68,9 +68,10 @@ function renderCategoryTabs() {
 
   categoryTabs.querySelectorAll('.cat-tab').forEach(btn => {
     btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat === activeCategory ? 'all' : btn.dataset.cat;
       categoryTabs.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeCategory = btn.dataset.cat;
+      categoryTabs.querySelector(`[data-cat="${cat}"]`).classList.add('active');
+      activeCategory = cat;
       renderProducts();
     });
   });
