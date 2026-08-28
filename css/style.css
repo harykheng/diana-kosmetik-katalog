@@ -117,6 +117,7 @@ header.topbar p {
 }
 
 .product-body {
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -148,7 +149,7 @@ header.topbar p {
 .product-prices {
   flex: 0 0 auto;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 140px 100px;
   column-gap: 10px;
   row-gap: 3px;
   align-items: baseline;
