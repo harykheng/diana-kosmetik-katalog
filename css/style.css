@@ -148,8 +148,9 @@ header.topbar p {
 
 .product-prices {
   flex: 0 0 auto;
+  margin-left: auto;
   display: grid;
-  grid-template-columns: 140px 100px;
+  grid-template-columns: auto auto;
   column-gap: 10px;
   row-gap: 3px;
   align-items: baseline;
