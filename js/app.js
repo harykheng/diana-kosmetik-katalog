@@ -46,7 +46,7 @@ async function loadBestsellers() {
 
   bestsellerList.innerHTML = data.map(p => `
     <div class="bestseller-card">
-      <div class="bestseller-badge">🔥 ${p.total_sold} terjual</div>
+      <div class="bestseller-badge">🔥 Hot Item</div>
       <div class="bestseller-name">${escapeHtml(p.name)}</div>
       <div class="bestseller-price">${p.price ? formatCurrency(p.price) : 'Tanyakan ke Sales'}</div>
     </div>
