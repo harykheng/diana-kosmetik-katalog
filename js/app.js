@@ -20,11 +20,14 @@ let allProducts = [];
 let categories = [];
 let activeCategory = 'all';
 let searchTerm = '';
+let currentPage = 1;
+const PAGE_SIZE = 50;
 
 const grid = document.getElementById('product-grid');
 const emptyState = document.getElementById('empty-state');
 const searchInput = document.getElementById('search-input');
 const categoryTabs = document.getElementById('category-tabs');
+const pagination = document.getElementById('pagination');
 
 async function loadCatalog() {
   grid.innerHTML = '<div class="loading">Memuat produk...</div>';
@@ -72,6 +75,7 @@ function renderCategoryTabs() {
       categoryTabs.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
       categoryTabs.querySelector(`[data-cat="${cat}"]`).classList.add('active');
       activeCategory = cat;
+      currentPage = 1;
       renderProducts();
     });
   });
@@ -96,11 +100,19 @@ function renderProducts() {
   if (!list.length) {
     grid.innerHTML = '';
     emptyState.style.display = 'block';
+    pagination.innerHTML = '';
     return;
   }
   emptyState.style.display = 'none';
 
-  grid.innerHTML = list.map(p => `
+  const totalPages = Math.ceil(list.length / PAGE_SIZE);
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const pageItems = list.slice(start, start + PAGE_SIZE);
+
+  grid.innerHTML = pageItems.map(p => `
     <div class="product-card">
       <div class="product-body">
         ${p.category_name ? `<div class="product-category">${escapeHtml(p.category_name)}</div>` : ''}
@@ -119,6 +131,33 @@ function renderProducts() {
       </div>
     </div>
   `).join('');
+
+  renderPagination(totalPages);
+}
+
+function renderPagination(totalPages) {
+  if (totalPages <= 1) {
+    pagination.innerHTML = '';
+    return;
+  }
+
+  let buttons = `<button class="page-btn" data-page="${currentPage - 1}" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
+  for (let i = 1; i <= totalPages; i++) {
+    buttons += `<button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+  }
+  buttons += `<button class="page-btn" data-page="${currentPage + 1}" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
+
+  pagination.innerHTML = buttons;
+
+  pagination.querySelectorAll('.page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = parseInt(btn.dataset.page, 10);
+      if (page === currentPage || page < 1 || page > totalPages) return;
+      currentPage = page;
+      renderProducts();
+      grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 }
 
 function escapeHtml(str) {
@@ -132,6 +171,7 @@ searchInput.addEventListener('input', () => {
   clearTimeout(searchDebounce);
   searchDebounce = setTimeout(() => {
     searchTerm = searchInput.value.trim();
+    currentPage = 1;
     renderProducts();
   }, 250);
 });

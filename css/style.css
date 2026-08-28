@@ -179,6 +179,38 @@ header.topbar p {
   color: var(--gold);
 }
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 16px 32px;
+}
+
+.page-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+  font-weight: 600;
+}
+
+.page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .loading, .empty-state {
   text-align: center;
   padding: 48px 16px;
@@ -207,6 +239,7 @@ footer {
   .product-prices {
     grid-template-columns: 1fr auto;
     align-self: stretch;
+    margin-left: 0;
   }
   .price-label {
     text-align: left;
